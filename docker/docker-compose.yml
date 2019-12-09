@@ -1,0 +1,78 @@
+version: '3.5'
+
+# NETWORKS
+networks:
+  private:
+    driver: bridge
+    external: false
+    name: ${COMPOSE_PROJECT_NAME}_private
+  web:
+    external: true
+
+# VOLUMES
+volumes:
+  dbdata:
+    driver: local
+
+# SERVICES
+services:
+  
+  #PHP-FPM
+  app:
+    image: wouldhide/laravel-php-fpm:latest
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+       - ../:/var/www
+       - ./php-fpm/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - private
+
+  # NGINX
+  web:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    environment:
+      - VIRTUAL_HOST=${COMPOSE_PROJECT_NAME}.test
+    volumes:
+      - ../:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - private
+      - web
+    expose:
+      - 80
+
+  # REDIS
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - ../:/data
+    ports:
+      - "6379"
+    networks:
+      - private
+
+  # # MYSQL
+  mysql:
+    image: mysql:5.7.22
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DB}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - private
