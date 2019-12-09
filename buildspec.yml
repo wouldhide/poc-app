@@ -66,11 +66,11 @@ phases:
 
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:php-fpm-$IMAGE_TAG
 
-      - printf '[{"name":"app","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:php-fpm-$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"app","imageUri":"%s"}' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:php-fpm-$IMAGE_TAG > imagedefinitions.json
 
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:nginx-$IMAGE_TAG
 
-      - printf '[{"name":"nginx","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:nginx-$IMAGE_TAG >> imagedefinitions.json
+      - printf ',{"name":"nginx","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:nginx-$IMAGE_TAG >> imagedefinitions.json
 
 artifacts:
 
