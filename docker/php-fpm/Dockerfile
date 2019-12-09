@@ -86,6 +86,7 @@ RUN useradd -u 1000 -ms /bin/bash -g www www && echo "www:www" | chpasswd && add
 
 # Copy existing application directory contents
 COPY . /var/www
+COPY local.ini /usr/local/etc/php/conf.d/
 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
