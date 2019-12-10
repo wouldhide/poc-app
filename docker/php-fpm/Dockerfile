@@ -62,23 +62,6 @@ COPY docker/php-fpm/local.ini /usr/local/etc/php/conf.d/
 # Copy existing application directory permissions
 COPY --chown=www:www / /var/www
 
-# Change current user to www
-USER www
-
-# fix vi/vim comaptibility
-# RUN echo "set nocompatible" >> ~/.vimrc \
-#     && echo "set nocompatible" >> ~/.exrc \ 
-#     && echo "set term=builtin_ansi" >> ~/.exrc \
-#     && echo "set term=builtin_ansi" >> ~/.vimrc \
-#     && echo "syntax on" >> ~/.vimrc
-
-RUN echo "set term=builtin_ansi" >> ~/.exrc \
-    && echo "set term=builtin_ansi" >> ~/.vimrc \
-    && echo "syntax on" >> ~/.vimrc
-
-# set alias for php artisan
-RUN echo 'alias art="php artisan"' >> ~/.bashrc
-
 WORKDIR /var/www
 
 RUN mkdir /var/www/vendor
@@ -88,6 +71,8 @@ RUN composer install
 RUN php artisan config:cache 
 RUN php artisan route:cache 
 
+# Change current user to www
+USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
