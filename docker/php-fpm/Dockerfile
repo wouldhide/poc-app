@@ -69,13 +69,14 @@ RUN mkdir /var/www/vendor
 COPY --chown=www:www / /var/www
 RUN chown -R www:www /var/www/vendor
 
-RUN php artisan config:cache 
-RUN php artisan route:cache 
 
 # Change current user to www
 USER www
 
 RUN composer install
+
+RUN php artisan config:cache 
+RUN php artisan route:cache 
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
