@@ -56,8 +56,8 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www && echo "www:www" | chpasswd && adduser www sudo
 
 # Copy existing application directory contents
-COPY . /var/www
-COPY local.ini /usr/local/etc/php/conf.d/
+COPY / /var/www
+COPY docker/php-fpm/local.ini /usr/local/etc/php/conf.d/
 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
@@ -78,9 +78,6 @@ RUN echo "set term=builtin_ansi" >> ~/.exrc \
 
 # set alias for php artisan
 RUN echo 'alias art="php artisan"' >> ~/.bashrc
-
-COPY docker/php-fpm/local.ini /usr/local/etc/php/conf.d/
-COPY / /var/www
 
 WORKDIR /var/www
 
