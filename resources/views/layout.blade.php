@@ -10,7 +10,7 @@
 
   <title>POC demo - @yield('title')</title>
 
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -49,8 +49,8 @@
     </div>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="/js/jquery.slim.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('/js/jquery.slim.min.js') }}"></script>
+    <script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
 
 </body>
 
