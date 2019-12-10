@@ -1,4 +1,4 @@
 FROM nginx:alpine
 
 COPY docker/nginx/conf.d/app.conf /etc/nginx/conf.d
-COPY / /var/www
+COPY public /var/www/public
