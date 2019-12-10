@@ -60,7 +60,7 @@ COPY / /var/www
 COPY docker/php-fpm/local.ini /usr/local/etc/php/conf.d/
 
 # Copy existing application directory permissions
-COPY --chown=www:www . /var/www
+COPY --chown=www:www / /var/www
 
 # Change current user to www
 USER www
@@ -80,6 +80,7 @@ RUN echo "set term=builtin_ansi" >> ~/.exrc \
 RUN echo 'alias art="php artisan"' >> ~/.bashrc
 
 WORKDIR /var/www
+
 
 RUN composer install
 
