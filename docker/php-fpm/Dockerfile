@@ -59,15 +59,14 @@ RUN useradd -u 1000 -ms /bin/bash -g www www && echo "www:www" | chpasswd && add
 COPY / /var/www
 COPY docker/php-fpm/local.ini /usr/local/etc/php/conf.d/
 
-# Copy existing application directory permissions
-COPY --chown=www:www / /var/www
 
 WORKDIR /var/www
 
 RUN mkdir /var/www/vendor
 
-RUN composer install
 
+# Copy existing application directory permissions
+COPY --chown=www:www / /var/www
 RUN chown -R www:www /var/www/vendor
 
 RUN php artisan config:cache 
@@ -75,6 +74,8 @@ RUN php artisan route:cache
 
 # Change current user to www
 USER www
+
+RUN composer install
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
