@@ -23,8 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo
 
 # Install Redis
-RUN pear config-set http_proxy ${HTTP_PROXY} \
-    && printf "\n" | pecl install -o -f redis \
+RUN printf "\n" | pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis
 
