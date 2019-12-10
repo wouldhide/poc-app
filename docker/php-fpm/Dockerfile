@@ -68,6 +68,8 @@ RUN mkdir /var/www/vendor
 
 RUN composer install
 
+RUN chown -R www:www /var/www/vendor
+
 RUN php artisan config:cache 
 RUN php artisan route:cache 
 
