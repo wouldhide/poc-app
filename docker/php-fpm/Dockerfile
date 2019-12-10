@@ -81,6 +81,7 @@ RUN echo 'alias art="php artisan"' >> ~/.bashrc
 
 WORKDIR /var/www
 
+RUN mkdir /var/www/vendor
 
 RUN composer install
 
