@@ -77,6 +77,8 @@ RUN composer install
 
 RUN php artisan config:cache 
 RUN php artisan route:cache 
+RUN php artisan migrate
+RUN php artisan db:seed
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
